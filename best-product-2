@@ -1,0 +1,58 @@
+function best_product_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'best_title' => '',
+        'product_title' => '',
+        'image_src' => '',
+        'score_text' => '',
+        'features_score' => '',
+        'battery_life_score' => '',
+        'ease_of_use_score' => '',
+        'accuracy_score' => '',
+        'design_score' => '',
+        'button_link' => '',
+    ), $atts);
+
+    ob_start();
+    ?>
+    <div class="product-container">
+        <div class="inner">
+            <div class="titles">
+                <h1 class="best-title"><?php echo esc_html($atts['best_title']); ?></h1>
+                <h2 class="product-title"><?php echo esc_html($atts['product_title']); ?></h2>
+            </div>
+            <div class="best-image">
+                <img src="<?php echo esc_url($atts['image_src']); ?>" alt="Editors Image">
+            </div>
+        </div>
+        <div class="inner-second">
+            <div class="product-image">
+                <img src="<?php echo esc_attr($atts['image_src']); ?>" alt="Image">
+            </div>
+            <div class="score">
+                <div class="score-box">
+                    <div class="score-container">
+                        <div class="colored-box">
+                            <span class="score-text-1"><?php echo esc_html($atts['score_text']); ?></span>
+                        </div>
+                        <span class="score-text">Overall Score</span>
+                    </div>
+                    <div class="score-item">
+                        <div class="inner-score">
+                            <div class="left-text">Design</div>
+                            <div class="right-text"><?php echo esc_html($atts['design_score']); ?></div>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: <?php echo esc_attr(((floatval($atts['design_score']) - 0.1) / 9.8) * 100); ?>%;"></div>
+                        </div>
+                        <div class="inner-button">
+                            <button class="button-73"><a href="<?php echo esc_url($atts['button_link']); ?>" rel="sponsored">Check Price at Amazon</a></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('best_product', 'best_product_shortcode');
