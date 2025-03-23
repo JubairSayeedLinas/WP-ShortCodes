@@ -1,0 +1,30 @@
+function product_review_box_shortcode($atts) {
+    $attributes = shortcode_atts( array(
+        'title' => '',
+        'image_src' => '',
+        'price' => '',
+        'description' => '',
+        'amazon_link' => ''
+    ), $atts );
+
+    $output = '<div class="product2-container">';
+    $output .= '<div class="product2-image-container">';
+    $output .= '<img src="' . esc_url($attributes['image_src']) . '" alt="Image" class="product2-image">';
+    $output .= '</div>';
+    $output .= '<div class="product2-content-container">';
+    $output .= '<div class="product2-header">';
+    $output .= '<h4 class="special-h4">' . esc_html($attributes['title']) . '</h4>';
+    $output .= '<div class="product2-price">' . esc_html($attributes['price']) . '</div>';
+    $output .= '<div class="product2-line"></div>';
+    $output .= '</div>';
+    $output .= '<p class="product2-paragraph">' . esc_html($attributes['description']) . '</p>';
+    $output .= '<button class="button-73"><a href="' . esc_url($attributes['amazon_link']) . '">Check Price at Amazon</a></button>';
+    $output .= '</div>';
+    $output .= '</div>';
+    $output .= '<div class="product2-container">';
+    $output .= '<div class="product2-line2"></div>';
+    $output .= '</div>';
+
+    return $output;
+}
+add_shortcode('product_review_box', 'product_review_box_shortcode');
