@@ -1,0 +1,42 @@
+function quick_spec_shortcode($atts) {
+    // Extract the attributes
+    $atts = shortcode_atts(array(
+        'titles' => '',
+        'spec-lines' => '',
+        'spec-title' => '',
+        'spec-paragraph' => '',
+        'spec-button-link' => ''
+    ), $atts);
+
+    // Split titles and spec lines into arrays
+    $titles = explode(',', $atts['titles']);
+    $spec_lines = explode(',', $atts['spec-lines']);
+
+    // Ensure the number of titles matches the number of spec lines
+    $num_lines = count($spec_lines);
+    $num_titles = count($titles);
+    if ($num_lines != $num_titles) {
+        return 'Error: The number of titles must match the number of spec lines.';
+    }
+
+    // Build the HTML based on the provided parameters
+    $output = '<div class="spec-main-title">' . 'Quick Specs' . '</div>';
+    $output .= '<div class="spec-container">';
+    $output .= '<div class="spec-left-side">';
+
+    // Display each spec line with its title bold
+    for ($i = 0; $i < $num_lines; $i++) {
+        $output .= '<div class="spec-line"><span class="title-bold">' . esc_html(trim($titles[$i])) . ': </span>' . esc_html(trim($spec_lines[$i])) . '</div>';
+    }
+
+    $output .= '</div>';
+    $output .= '<div class="spec-right-side">';
+    $output .= '<div class="spec-title">' . esc_html($atts['spec-title']) . '</div>';
+    $output .= '<div class="spec-paragraph">' . esc_html($atts['spec-paragraph']) . '</div>';
+    $output .= '<button class="spec-button"><a href="' . esc_url($atts['spec-button-link']) . '"> Check Price at Amazon</a></button>';
+    $output .= '</div>';
+    $output .= '</div>';
+
+    return $output;
+}
+add_shortcode('quick_spec', 'quick_spec_shortcode');
