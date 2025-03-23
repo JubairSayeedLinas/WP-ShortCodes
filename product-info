@@ -1,0 +1,37 @@
+add_shortcode('product_info_box', 'product_info_box_shortcode');
+
+function product_info_box_shortcode($atts) {
+    $attributes = shortcode_atts( array(
+        'title' =>'',
+        'img_code' => '',
+        'product_title' => '',
+        'product_price' => '',
+        'product_description' => '',
+        'product_link' => ''
+    ), $atts );
+
+    // Get the Amazon image URL using ACF's get_field_amazon shortcode
+    $amazon_image = do_shortcode('[get_field_amazon asin="' . esc_attr($attributes['img_code']) . '" field="large_image"]');
+
+    // Final output
+    return '<div class="product2-container">
+                <p class="product2-title" style="margin-top: 0px;">' . esc_html($attributes['title']) . '</p>
+            </div>
+            <div class="product2-container">
+                <div class="product2-image-container">
+                    <img src="' . esc_attr($amazon_image) . '" alt="Image" class="product2-image">
+                </div>
+                <div class="product2-content-container">
+                    <div class="product2-header">
+                        <h4 class="special-h4" style="margin: 0px;">' . esc_html($attributes['product_title']) . '</h4>
+                        <div class="product2-price">' . esc_html($attributes['product_price']) . '</div>
+                        <div class="product2-line"></div>
+                    </div>
+                    <p class="product2-paragraph">' . esc_html($attributes['product_description']) . '</p>
+                    <button class="button-73"><a href="' . esc_url($attributes['product_link']) . '">Check Price at Amazon</a></button>
+                </div>
+            </div>
+            <div class="product2-container">
+                <div class="product2-line2"></div>
+            </div>';
+}
