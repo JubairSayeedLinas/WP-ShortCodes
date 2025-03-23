@@ -1,0 +1,32 @@
+function recipe_shortcode($atts) {
+        $atts = shortcode_atts(array(
+            'prep' => '',
+            'cook' => '',
+            'total' => '',
+            'servings' => ''
+        ), $atts);
+    
+        $output = '<div class="recipe">
+        <div class="text">
+          <p><b>Prep Time:</b><br>'. $atts['prep'] . ' </p>
+        </div>
+        <div class="text">
+          <p><b>Cook Time:</b><br>'. $atts['cook'] . ' </p>
+        </div>
+        <div class="text">
+          <p><b>Total Time:</b><br>'. $atts['total'] . ' </p>
+        </div>
+        <div class="text2">
+          <p><b>Number of Servings:</b><br>'. $atts['servings'] . ' </p>
+        </div>
+        
+      </div>';
+
+    
+        if (!empty($output)) {
+            return $output;
+        } else {
+            return 'Please provide some text.';
+        }
+}
+add_shortcode('recipe', 'recipe_shortcode'); 
