@@ -1,0 +1,52 @@
+// Register the shortcode with the name [pair-review]
+add_shortcode('pair-review', 'pair_review_shortcode');
+
+// Shortcode function
+function pair_review_shortcode($atts) {
+    // Extract attributes
+    $atts = shortcode_atts(array(
+        'title' => '',
+        'pros' => '',
+        'cons' => '',
+        'asin' => '', // Added asin attribute to fetch from the plugin
+        'button_link' => ''
+    ), $atts);
+
+    // Convert pros and cons to arrays and separate by commas
+    $pros_array = explode(',', $atts['pros']);
+    $cons_array = explode(',', $atts['cons']);
+
+    // Generate the HTML based on the attributes and fetched image URL
+    $output = '
+        <div class="pair-review-container">
+            <h2 class="pair-review-pro-title">' . esc_html($atts['title']) . '</h2>
+            <div class="pair-review-table">
+                <div class="section">
+                    <h2>Pros</h2>
+                    <ul>';
+
+    foreach ($pros_array as $pro) {
+        $output .= '<li><i class="fa-solid fa-square-check"></i>' . esc_html(trim($pro)) . '</li>';
+    }
+
+    $output .= '</ul>
+                </div>
+                <div class="section">
+                    <h2>Cons</h2>
+                    <ul>';
+
+    foreach ($cons_array as $con) {
+        $output .= '<li><i class="fa-solid fa-square-xmark"></i>' . esc_html(trim($con)) . '</li>';
+    }
+
+    $output .= '</ul>
+                </div>
+                <div class="section">
+                    <img src="' . esc_url(do_shortcode("[get_field_amazon asin='" . esc_attr($atts['asin']) . "' field='large_image']")) . '" alt="Image">
+                    <button class="pair-button"><a href="' . esc_url($atts['button_link']) . '">Check Price at Amazon</a></button>
+                </div>
+            </div>
+        </div>';
+
+    return $output;
+}
