@@ -1,0 +1,30 @@
+function custom_pros_cons_shortcode($atts, $content = null) {
+    $output = '<div class="pro-cons-table">' . do_shortcode($content) . '</div>';
+    return $output;
+}
+add_shortcode('custom_pros_cons', 'custom_pros_cons_shortcode');
+
+function pros_shortcode($atts, $content = null) {
+    return '<div class="left-side"><h2>Reasons to Buy</h2><ul>' . do_shortcode($content) . '</ul></div>';
+}
+add_shortcode('pros', 'pros_shortcode');
+
+function cons_shortcode($atts, $content = null) {
+    return '<div class="right-side"><h2>Reasons to Avoid</h2><ul>' . do_shortcode($content) . '</ul></div>';
+}
+add_shortcode('cons', 'cons_shortcode');
+
+function divider_shortcode() {
+    return '<div class="divider"></div>';
+}
+add_shortcode('divider', 'divider_shortcode');
+
+function pro_shortcode($atts, $content = null) {
+    return '<li><i class="fa-regular fa-circle-check"></i>' . $content . '</li>';
+}
+add_shortcode('pro', 'pro_shortcode');
+
+function con_shortcode($atts, $content = null) {
+    return '<li><i class="fa-regular fa-circle-xmark"></i>' . $content . '</li>';
+}
+add_shortcode('con', 'con_shortcode');
