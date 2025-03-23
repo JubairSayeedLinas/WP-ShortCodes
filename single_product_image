@@ -1,0 +1,17 @@
+add_shortcode('single_product_image', 'single_product_image_shortcode');
+
+function single_product_image_shortcode($atts) {
+    global $post;
+    
+    $attributes = shortcode_atts( array(
+        'img_code' => ''
+    ), $atts );
+
+    // Image to display
+    $image_url = do_shortcode('[get_field_amazon asin="' . $attributes['img_code'] . '" field="large_image"]');
+
+    // Final output
+    $output = '<div class="single-product-img"><img width="956" height="394" src="' . $image_url . '" /></div>';
+
+    return $output;
+}
