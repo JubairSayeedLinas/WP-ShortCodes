@@ -1,0 +1,41 @@
+function dynamic_table_shortcode($atts) {
+    // Parse attributes
+    $attributes = shortcode_atts(array(
+        'data' => '',
+    ), $atts);
+    
+    // Convert data attribute into an array
+    $productData = explode('|', $attributes['data']);
+
+    // Begin constructing the table HTML
+    $output = '<table class="dynamic-table">';
+    $output .= '<tr>';
+    $output .= '<th>Product</th>'; // Always include Product header
+    
+    // Create additional headers based on the number of attributes
+    $headers = explode(',', $productData[0]);
+    foreach ($headers as $header) {
+        $output .= '<th>' . esc_html(trim($header)) . '</th>';
+    }
+    
+    $output .= '</tr>';
+    
+    // Create data rows
+    foreach ($productData as $dataRow) {
+        $attributes = explode(',', $dataRow);
+        
+        $output .= '<tr>';
+        
+        // Loop through attributes
+        foreach ($attributes as $attribute) {
+            $output .= '<td>' . esc_html(trim($attribute)) . '</td>';
+        }
+        
+        $output .= '</tr>';
+    }
+    
+    $output .= '</table>';
+    
+    return $output;
+}
+add_shortcode('dynamic_table', 'dynamic_table_shortcode');
